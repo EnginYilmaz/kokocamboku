@@ -1,0 +1,51 @@
+<!DOCTYPE html> 
+<html>  
+<head>
+<title>Benim test uygulamam</title>
+<script>
+
+//localStorage.removeItem("calisanlar");
+function isim_sil (){
+  localStorage.removeItem("calisanlar");
+  isim_listele();
+}
+function isim_gir() {
+	yeni_isim = document.getElementById('input_isim_gir').value;
+	if (yeni_isim=="") return;
+	onceki_isim= localStorage.getItem('calisanlar');
+	if (onceki_isim == null) {
+	localStorage.setItem("calisanlar", "{\"isim\":\""+yeni_isim+"\"}");
+	//alert("a");
+	} else {
+	localStorage.setItem("calisanlar", onceki_isim +"," + "{\"isim\":\""+yeni_isim+"\"}");
+	}
+	isim_listele();
+}
+function isim_listele (){
+	txt = '{"calisanlar":['+localStorage.getItem("calisanlar")+"]}";
+	//for (var isim in calisanlar_arr) alert("selam");
+	var obj = eval ("(" + txt + ")");
+	var print_txt="";
+	for (i=0; i<obj.calisanlar.length; i++){
+	  if (obj.calisanlar[i] != null)
+      print_txt += obj.calisanlar[i].isim + "<br>";
+	}
+	document.getElementById('liste').innerHTML= print_txt + "<br>";
+		//document.getElementById('liste').innerHTML= obj.calisanlar[1].isim;
+}
+
+</script>
+</head>
+<body>
+<form>
+<input type="edit" id="input_isim_gir"/>
+<input type="button" onclick="isim_gir()" value="gir"/>
+<input type="button" onclick="isim_sil()" value="sil"/>
+</form>
+<div id='liste'>
+</div>
+<script>
+isim_listele();
+</script>
+</body>
+</html>
